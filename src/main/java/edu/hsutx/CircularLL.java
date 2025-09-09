@@ -1,4 +1,4 @@
-package edu.hsutx;
+
 
 /**
  * The {@code CircularLL} class implements a circularly linked list where each element points
@@ -42,7 +42,7 @@ public class CircularLL<E> {
      * @return {@code true} if the list is empty, otherwise {@code false}
      */
     public boolean isEmpty() {
-        // TODO - Complete this method
+        return size == 0;
     }
 
     /**
@@ -52,7 +52,15 @@ public class CircularLL<E> {
      * @param e the element to add
      */
     public void addFirst(E e) {
-        // TODO - Complete this method
+        Node<E> newNode = new Node<>(e, null);
+        if (head == null) {head = newNode;
+        tail = newNode;
+        newNode.next = head;
+        } else  {
+            newNode.next = head;
+            head = newNode;
+        }
+        size++;
     }
 
     /**
@@ -62,7 +70,11 @@ public class CircularLL<E> {
      * @param e the element to add
      */
     public void addLast(E e) {
-        // TODO - Complete this method
+        Node<E> newNode = new Node<>(e, null);
+        if (tail == null) {tail = newNode;
+        newNode.next = tail;
+        }else{newNode.next = tail;tail = newNode;}
+        size++;
     }
 
     /**
@@ -85,7 +97,10 @@ public class CircularLL<E> {
      * shifting the head of the list to the next element.
      */
     public void rotate() {
-        // TODO - Complete this method
+        if (isEmpty()){
+            head = head.getNext();
+            tail = tail.getNext();
+        }
     }
 
     /**
@@ -94,7 +109,10 @@ public class CircularLL<E> {
      * @return the first element of the list, or {@code null} if the list is empty
      */
     public E first() {
-        // TODO - Complete this method
+        if (isEmpty()) {
+            return null;
+        } else {
+            return head.getData();
+        }
     }
-
 }

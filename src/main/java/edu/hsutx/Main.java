@@ -1,4 +1,4 @@
-package edu.hsutx;
+
 import java.util.Scanner;
 
 
@@ -15,7 +15,7 @@ import java.util.Scanner;
 public class Main {
     public static void main(String[] args) {
         // The path to your CSV file
-        String csvFile = "data/Abilene-2023-Weather.csv";
+        String csvFile = "Abilene-2023-Weather.csv";
         Scanner scanner = new Scanner(System.in);
         GrowingDays gd = new GrowingDays(csvFile, 51);
 
@@ -23,7 +23,7 @@ public class Main {
         int yearDay = gd.getDayOverCDThreshold(threshold);
         System.out.println(yearDay);
 
-        CircularLL<String> weekdays = new CircularLL<String>();
+        CircularLL<String> weekdays = new CircularLL <>();
         weekdays.addFirst("Saturday");
         weekdays.addFirst("Friday");
         weekdays.addFirst("Thursday");

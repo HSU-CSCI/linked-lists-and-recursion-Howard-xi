@@ -1,4 +1,4 @@
-package edu.hsutx;
+
 
 import java.io.BufferedReader;
 import java.io.FileReader;
@@ -21,8 +21,11 @@ public class GrowingDays {
      * @param degrees  An array of average daily temperatures.
      * @param threshold The temperature threshold for calculating growing degree days.
      */
-    GrowingDays(double[] degrees, double threshold) {
-        // TODO - Complete this method.  Fill degreeDays and cumulativeDegreeDays appropriately.
+    public GrowingDays(double[] degrees, double threshold) {
+        degreeDays = new double[degrees.length];
+        cumulativeDegreeDays = new double[degrees.length];
+        for (int i = 0; i < degrees.length; i++) {
+            degreeDays[i] = degrees[i]; degreeDays[i] += threshold; cumulativeDegreeDays[i] = degreeDays[i];}
     }
 
     /**
@@ -32,7 +35,7 @@ public class GrowingDays {
      * @param csvFile  The name of the CSV file containing average daily temperatures.
      * @param threshold The temperature threshold for calculating growing degree days.
      */
-    GrowingDays(String csvFile, double threshold) {
+    public GrowingDays(String csvFile, double threshold) {
         // Read the CSV file and extract average temperatures into an array
         double[] avgTemperatures = readAvgTemperaturesFromCsv(csvFile);
 
@@ -88,7 +91,16 @@ public class GrowingDays {
      * @return The index of the first day where cumulative degree days exceed the threshold.
      */
     public int getDayOverCDHelper(int left, int right, double threshold) {
-        // TODO - Complete this method
+        while (left <= right) {
+            int mid = (left + right) / 2;
+            if (degreeDays[mid] > threshold) {
+                right = mid - 1;
+            }
+            else if (degreeDays[mid] < threshold) {
+                left = mid + 1;
+            }
+        }
+        return left;
     }
 
     /**
