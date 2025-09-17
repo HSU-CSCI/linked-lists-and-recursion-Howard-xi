@@ -25,7 +25,10 @@ public class GrowingDays {
         degreeDays = new double[degrees.length];
         cumulativeDegreeDays = new double[degrees.length];
         for (int i = 0; i < degrees.length; i++) {
-            degreeDays[i] = degrees[i]; degreeDays[i] += threshold; cumulativeDegreeDays[i] = degreeDays[i];}
+            double degree = Math.max(0, degrees[i]-threshold);
+            degreeDays[i] = degree;
+            cumulativeDegreeDays[i] = (i == degrees.length - 1) ? degree : degreeDays[i];
+            }
     }
 
     /**
@@ -93,10 +96,10 @@ public class GrowingDays {
     public int getDayOverCDHelper(int left, int right, double threshold) {
         while (left <= right) {
             int mid = (left + right) / 2;
-            if (degreeDays[mid] > threshold) {
+            if (cumulativeDegreeDays[mid] > threshold) {
                 right = mid - 1;
             }
-            else if (degreeDays[mid] < threshold) {
+            else{
                 left = mid + 1;
             }
         }

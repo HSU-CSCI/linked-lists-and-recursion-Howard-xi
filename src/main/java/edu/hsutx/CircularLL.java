@@ -42,7 +42,11 @@ public class CircularLL<E> {
      * @return {@code true} if the list is empty, otherwise {@code false}
      */
     public boolean isEmpty() {
-        return size == 0;
+        return tail == null;
+    }
+
+    public int size() {
+        return size;
     }
 
     /**
@@ -52,13 +56,12 @@ public class CircularLL<E> {
      * @param e the element to add
      */
     public void addFirst(E e) {
-        Node<E> newNode = new Node<>(e, null);
-        if (head == null) {head = newNode;
-        tail = newNode;
-        newNode.next = head;
-        } else  {
-            newNode.next = head;
-            head = newNode;
+        if (isEmpty()) {
+            tail = new Node<>(e, null);
+            tail.next = tail;
+        } else {
+            Node<E> newNode = new Node<>(e, tail.next);
+            tail.next = newNode;
         }
         size++;
     }
@@ -70,11 +73,8 @@ public class CircularLL<E> {
      * @param e the element to add
      */
     public void addLast(E e) {
-        Node<E> newNode = new Node<>(e, null);
-        if (tail == null) {tail = newNode;
-        newNode.next = tail;
-        }else{newNode.next = tail;tail = newNode;}
-        size++;
+        addFirst(e);
+        tail = tail.next;
     }
 
     /**
@@ -85,11 +85,11 @@ public class CircularLL<E> {
      */
     public E removeFirst() {
         if (isEmpty()) return null;
-        Node<E> head = tail.getNext();
+        Node<E> head = tail.next;
         if (head == tail) tail = null;
-        else tail.setNext(head.getNext());
+        else tail.next = head.next;
         size--;
-        return head.getData();
+        return head.data;
     }
 
     /**
@@ -98,8 +98,7 @@ public class CircularLL<E> {
      */
     public void rotate() {
         if (isEmpty()){
-            head = head.getNext();
-            tail = tail.getNext();
+           tail = tail.next;
         }
     }
 
@@ -112,7 +111,7 @@ public class CircularLL<E> {
         if (isEmpty()) {
             return null;
         } else {
-            return head.getData();
+            return tail.next.data;
         }
     }
 }
